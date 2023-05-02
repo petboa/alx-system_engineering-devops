@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Ignore shellcheck error
+# shellcheck disable=SC2009
+
+# Get the list of processes and grep the lines containing "bash"
+ps aux | grep bash | grep -v grep | while read -r line; do
+  # Extract the PID from the line and display it
+  pid=$(echo "$line" | awk '{print $2}')
+  echo "PID: $pid"
+done

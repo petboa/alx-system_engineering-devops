@@ -1,0 +1,18 @@
+#!/bin/bash
+
+trap 'echo "I am invincible!!!"; exit' SIGTERM
+
+while true; do
+    echo "To infinity and beyond"
+    sleep 2
+done &
+
+pid=$!
+
+while true; do
+    read -p "Enter 'kill' to stop the process: " input
+    if [[ "$input" == "kill" ]]; then
+        kill "$pid"
+        exit
+    fi
+done
