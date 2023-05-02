@@ -1,4 +1,3 @@
-#!/bin/bash
 # /etc/init.d/101-manage_my_process
 
 # Check if the user is root
