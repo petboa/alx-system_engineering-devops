@@ -1,0 +1,77 @@
+#!/bin/bash
+# /etc/init.d/101-manage_my_process
+
+# Check if the user is root
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root." >&2
+   exit 1
+fi
+
+# Set the path to the script and the PID file
+SCRIPT_PATH="/usr/local/bin/manage_my_process"
+PID_FILE="/var/run/my_process.pid"
+
+# Check if the script exists
+if [[ ! -x "$SCRIPT_PATH" ]]; then
+   echo "The script $SCRIPT_PATH does not exist or is not executable." >&2
+   exit 1
+fi
+
+# Define the start function
+start() {
+   if [[ -f "$PID_FILE" ]]; then
+      echo "The script is already running with PID $(cat $PID_FILE)."
+      exit 1
+   fi
+   
+   # Start the script in the background, redirecting both standard output and error to /dev/null
+   nohup $SCRIPT_PATH >/dev/null 2>&1 &
+   
+   # Get the PID of the script and save it to the PID file
+   echo $! > $PID_FILE
+   
+   echo "manage_my_process started"
+}
+
+# Define the stop function
+stop() {
+   if [[ ! -f "$PID_FILE" ]]; then
+      echo "The script is not running."
+      exit 1
+   fi
+   
+   # Get the PID of the script and kill it
+   PID=$(cat $PID_FILE)
+   kill $PID
+   
+   # Delete the PID file
+   rm $PID_FILE
+   
+   echo "manage_my_process stopped"
+}
+
+# Define the restart function
+restart() {
+   stop
+   start
+   echo "manage_my_process restarted"
+}
+
+# Parse the command-line arguments
+case "$1" in
+   start)
+      start
+      ;;
+   stop)
+      stop
+      ;;
+   restart)
+      restart
+      ;;
+   *)
+      echo "Usage: $0 {start|stop|restart}"
+      exit 1
+      ;;
+esac
+
+exit 0

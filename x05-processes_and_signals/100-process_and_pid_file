@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Create file with PID
+echo $$ > /var/run/myscript.pid
+
+# Trap signals
+trap "echo Y U no love me?!" SIGINT
+trap "echo I hate the kill command" SIGTERM
+trap "rm /var/run/myscript.pid; exit" SIGQUIT
+
+# Loop infinitely
+while true
+do
+  echo "To infinity and beyond"
+  sleep 1
+done
