@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Ignore shellcheck SC2009 error for 'ps aux | grep bash'
 # shellcheck disable=SC2009
