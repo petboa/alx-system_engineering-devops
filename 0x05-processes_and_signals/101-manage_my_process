@@ -17,26 +17,34 @@
 #   If any other or no arguments are passed, displays
 #+  "Usage: manage_my_process {start|stop|restart}"
 
-if [ "$1" == "start" ]
-then
+PIDFILE="/var/run/my_process.pid"
+
+if [ "$1" == "start" ]; then
   ./manage_my_process &
-  echo $$ > /var/run/my_process.pid
+  echo $$ > "$PIDFILE"
   echo "manage_my_process started"
 
-elif [ "$1" == "stop" ]
-then
-  kill "$(pgrep -f /manage_my_process)" 
-  rm /var/run/my_process.pid
-  echo "manage_my_process stopped"
+elif [ "$1" == "stop" ]; then
+  if [ -f "$PIDFILE" ]; then
+    kill "$(cat "$PIDFILE")"
+    rm "$PIDFILE"
+    echo "manage_my_process stopped"
+  else
+    echo "manage_my_process is not running"
+  fi
 
-elif [ "$1" == "restart" ]
-then
-  kill "$(pgrep -f /manage_my_process)"
-  rm /var/run/my_process.pid
+elif [ "$1" == "restart" ]; then
+  if [ -f "$PIDFILE" ]; then
+    kill "$(cat "$PIDFILE")"
+    rm "$PIDFILE"
+  fi
   ./manage_my_process &
-  echo $$ > /var/run/my_process.pid
+  echo $$ > "$PIDFILE"
   echo "manage_my_process restarted"
 
 else
   echo "Usage: manage_my_process {start|stop|restart}"
 fi
+
+# Trap the SIGTERM signal and remove the PID file before exiting
+trap 'rm -f "$PIDFILE"; exit' SIGTERM
