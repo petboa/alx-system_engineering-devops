@@ -1,12 +1,4 @@
 #!/usr/bin/env bash
-# Find the PID of 7-highlander
-pid=$(pgrep 7-highlander)
+# Beheaded process
 
-# Check if the PID was found
-if [[ -z $pid ]]; then
-  echo "7-highlander process not found."
-  exit 1
-fi
-
-# Send a SIGTERM signal to the process
-kill -SIGTERM "$pid"
+pgrep -f 7-highlander | xargs kill -9
