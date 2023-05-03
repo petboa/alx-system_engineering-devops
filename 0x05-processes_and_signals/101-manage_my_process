@@ -41,7 +41,7 @@ stop() {
    
    # Get the PID of the script and kill it
    PID=$(cat $PID_FILE)
-   kill $PID
+   kill "$PID"
    
    # Delete the PID file
    rm $PID_FILE
