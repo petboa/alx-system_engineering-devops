@@ -1,17 +1,4 @@
 #!/usr/bin/env bash
 #Display the pid withh processes name
-# Ignore shellcheck SC2009 error for 'ps aux | grep bash'
-# shellcheck disable=SC2009
 
-# Get the PID of the current script
-script_pid=$$
-
-# Get the PIDs and process names of all processes whose name contains the word 'bash'
-process_list=$(ps aux | grep bash | grep -v grep | awk '{ print $2" "$11 }')
-
-# Loop through the list of processes and display the PID and process name
-while read -r process; do
-    pid=$(echo "$process" | awk '{ print $1 }')
-    name=$(echo "$process" | awk '{ print $2 }')
-    echo "$pid $name"
-done <<< "$process_list"
+pgrep bash -l
