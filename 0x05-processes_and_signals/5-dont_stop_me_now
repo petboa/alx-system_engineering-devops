@@ -2,11 +2,3 @@
 # Find the PID of the 4-to_infinity_and_beyond process
 
 PID=$(pgrep -f "4-to_infinity_and_beyond")
-
-if [ -z "$PID" ]; then
-    echo "No matching process found"
-else
-    # Kill the process
-    kill "$PID"
-    echo "Process $PID killed"
-fi
