@@ -11,7 +11,7 @@ done &
 pid=$!
 
 while true; do
-    read -p "Enter 'kill' to stop the process: " input
+    read -r -p "Enter 'kill' to stop the process: " input
     if [[ "$input" == "kill" ]]; then
         kill "$pid"
         exit
