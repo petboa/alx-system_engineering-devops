@@ -3,4 +3,4 @@
 PID=$(ps -ef | grep '4-to_infinity_and_beyond' | grep -v grep | awk '{print $2}')
 
 # Send a SIGTERM signal to the process
-kill -s SIGTERM $PID
+kill -s SIGTERM "$PID"
