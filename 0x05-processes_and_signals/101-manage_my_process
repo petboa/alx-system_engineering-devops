@@ -28,7 +28,8 @@ then
   kill "$(pgrep -f /manage_my_process)" 
   rm /var/run/my_process.pid
   echo "manage_my_process stopped"
-
+ rm /var/run/my_process.pid
+ 
 elif [ "$1" == "restart" ]
 then
   kill "$(pgrep -f /manage_my_process)"
