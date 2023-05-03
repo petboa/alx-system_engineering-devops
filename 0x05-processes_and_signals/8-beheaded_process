@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # Find the PID of 7-highlander
 pid=$(pgrep 7-highlander)
 
