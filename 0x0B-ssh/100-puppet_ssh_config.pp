@@ -11,6 +11,6 @@ file_line { 'Turn off passwd auth':
 file_line { 'Delare identity file':
   ensure => present,
   path   => '/etc/ssh/ssh_config',
-  line   => '     PubkeyAuthentication yes',
+  line   => '     IdentityFile ~/.ssh/school',
   replace => true,
 }
