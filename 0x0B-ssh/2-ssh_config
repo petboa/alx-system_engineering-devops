@@ -4,5 +4,4 @@ Host web-01
 	Hostname 18.206.233.202
 	User ubuntu
 	PasswordAuthentication no
-	PubkeyAuthentication yes
 	IdentityFile ~/.ssh/school
