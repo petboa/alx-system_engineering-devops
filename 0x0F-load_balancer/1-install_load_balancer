@@ -15,8 +15,8 @@ backend webservers
     balance roundrobin
     option httpchk GET /health_check
     http-check expect status 200
-    server 555-web-01 100.25.193.17:80 check
-    server 555-web-02  54.160.116.235:80 check
+    server 186766-web-01 54.209.161.204 check
+    server 186766-web-02  54.237.0.237:80 check
     "
     printf '%s\n' "$load_balancer_config"
     sudo apt-get -y update
