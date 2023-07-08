@@ -1,13 +1,13 @@
 global
 	log     /dev/log local0
-        maxconn 2048
+	maxconn 2048
 	user    haproxy
 	group   haproxy
 	tune.ssl.default-dh-param 2048
 
 defaults
 	log     global
-        mode    http
+	mode    http
 	option  httplog
 	option  dontlognull
 	retries 3
@@ -20,20 +20,21 @@ defaults
 
 frontend www-http
 	bind   0.0.0.0:80
-        reqadd X-Forwarded-Proto:\ http
+	reqadd X-Forwarded-Proto:\ http
+	acl    redirect-https hdr(host) -i www.bdbnb.site
+	redirect scheme https code 301 if redirect-https
 	default_backend www-backend
-	redirect scheme https code 301 if !{ ssl_fc }
 
 frontend www-https
 	bind   0.0.0.0:443 ssl crt /etc/haproxy/certs/www.bdbnb.site.pem
-        reqadd X-Forwarded-Proto:\ https
+	reqadd X-Forwarded-Proto:\ https
 	acl    letsencrypt-acl path_beg /.well-known/acme-challenge/
 	use_backend letsencrypt-backend if letsencrypt-acl
 	default_backend www-backend
 
 backend www-backend
 	balance  roundrobin
-        redirect scheme https if !{ ssl_fc }
+	redirect scheme https if !{ ssl_fc }
 	server 186766-web-01 54.209.161.204:80 check
 	server 186766-web-02 54.237.0.237:80 check
 
