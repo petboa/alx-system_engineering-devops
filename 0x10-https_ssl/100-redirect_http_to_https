@@ -22,7 +22,7 @@ frontend www-http
     bind   0.0.0.0:80
     reqadd X-Forwarded-Proto:\ http
     acl    redirect-https hdr(host) -i www.bdbnb.site
-    http-request redirect scheme https code 301 if redirect-https
+    redirect scheme https code 301 if redirect-https
     default_backend www-backend
 
 frontend www-https
