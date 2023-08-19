@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -e
+
+SERVICE_NAME="gunicorn"
+
+# Check if Gunicorn service is running
+if ! systemctl is-active --quiet "$SERVICE_NAME"; then
+    echo "Gunicorn is not running."
+    exit 1
+fi
+
+# Reload Gunicorn gracefully
+sudo systemctl reload "$SERVICE_NAME"
+
+echo "Gunicorn reloaded gracefully."
+    
